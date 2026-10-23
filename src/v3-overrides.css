@@ -1,0 +1,18 @@
+/* Preserve uploaded V2 content/editor, while the homepage is a real 3D scene. */
+:root{--blue:#08fff9;--bright:#08fff9;--font:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif}
+.journal-home{display:block;height:100dvh;min-height:0;overflow:hidden}
+body.reader-open{overflow:hidden}
+#focus-dialog{position:fixed;inset:0;width:100vw;height:100dvh;max-width:none;max-height:none;margin:0;border:0;background:transparent;color:#1c1e26}
+#focus-dialog::backdrop{background:#06100bba;backdrop-filter:blur(5px)}
+#focus-dialog .focus-object{position:relative;display:block;isolation:auto;box-shadow:none;background:transparent;border:0;transform-origin:center}
+#focus-dialog .card{--navy:#235449}
+#focus-dialog .card-bar{background:#08fff9;color:#142d24}
+#focus-dialog .chip[aria-current=true],#focus-dialog .tabs button[aria-current=page]{border-color:#08fff9}
+#focus-dialog .dock-btn.on{background:#08fff9;color:#15251f}
+#focus-dialog .ed:focus{outline-color:#08fff9}
+#focus-dialog .gal img,#focus-dialog .slot img{display:block}
+#lightbox{width:auto;height:auto;max-width:95vw;max-height:92dvh}
+#lightbox img{max-height:84dvh;max-width:90vw;object-fit:contain}
+.scene-actions{z-index:2}
+#focus-dialog .lanyard{display:none}
+@media(max-width:650px){#focus-dialog .focus-object{min-height:0;height:calc(100dvh - 92px)}#focus-dialog .card-main{margin-top:20px}}
