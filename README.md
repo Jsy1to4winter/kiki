@@ -38,6 +38,7 @@ npm run preview -- --port 4173 --strictPort
 - `src/v2-reader.js` / `src/v2-reader.css`：上传版本的内容与本地编辑功能。
 - `src/v3-overrides.css`：阅读器与三维首页整合样式。
 - `.agents/skills/`、`vendor/sticker-forge/`、`downloads/`：此前下载的技能和工具源码，保留供后续使用。
+- `tools/text-particleization/`：Da0Mine 文字粒子交互原始源码；打开 `index.html` 即可使用，来源、在线预览和后续调用提示词见[使用说明](tools/text-particleization/使用说明.md)。
 
 ## 部署
 
