@@ -18,24 +18,27 @@ function rebuild(){
  canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);
  scale=Math.min(W/img.width,(H-58)/img.height);ox=(W-img.width*scale)/2;oy=(H-58-img.height*scale)/2;
  // Fixed source-space spacing preserves the same original aspect and glyphs on every display.
- const gap=3;particles=[];
- for(let y=0;y<img.height;y+=gap)for(let x=0;x<img.width;x+=gap){
-  const i=(y*img.width+x)*4,r=pixels[i],g=pixels[i+1],b=pixels[i+2],v=Math.max(r,g,b);
-  if(v<=8)continue;
-  // Unpremultiply by intensity: black is transparent, original RGB is recovered on black.
+ const gap=7;particles=[];
+ // Staggered jitter breaks the former square grid; sample the original at each new position.
+ for(let row=0,y=0;y<img.height;y+=gap,row++)for(let col=0,x=0;x<img.width;x+=gap,col++){
+  const noise=n=>{const v=Math.sin(n*127.1+row*311.7)*43758.5453;return v-Math.floor(v)};
+  const sx=Math.max(0,Math.min(img.width-1,Math.round(x+(row%2)*gap*.5+(noise(col+1)-.5)*gap*.65)));
+  const sy=Math.max(0,Math.min(img.height-1,Math.round(y+(noise(col+73)-.5)*gap*.65)));
+  const i=(sy*img.width+sx)*4,r=pixels[i],g=pixels[i+1],b=pixels[i+2],v=Math.max(r,g,b);
+  if(v<=12)continue;
   const alpha=v/255,color=`rgba(${Math.round(r*255/v)},${Math.round(g*255/v)},${Math.round(b*255/v)},${alpha})`;
-  particles.push({x,y,hx:x,hy:y,vx:0,vy:0,color,size:gap*.96});
+  particles.push({x:sx,y:sy,hx:sx,hy:sy,vx:0,vy:0,color,size:gap*(.43+noise(col+117)*.17)});
  }
  pointer.active=false;wake();
 }
 function wake(){if(!raf&&!document.hidden){settled=false;last=performance.now();raf=requestAnimationFrame(draw)}}
 function draw(now){raf=0;const dt=Math.min((now-last)/16.667||1,2);last=now;ctx.clearRect(0,0,W,H);ctx.save();ctx.translate(ox,oy);ctx.scale(scale,scale);let moving=false;
  for(const p of particles){
-  if(pointer.active&&!reduced){const dx=p.x-pointer.x,dy=p.y-pointer.y,d=Math.hypot(dx,dy),radius=Math.min(190,85/scale);if(d<radius){const a=d>.001?Math.atan2(dy,dx):0,f=(1-d/radius)*1.1*dt;p.vx+=Math.cos(a)*f;p.vy+=Math.sin(a)*f}}
-  if(!reduced){p.vx+=(p.hx-p.x)*.02*dt;p.vy+=(p.hy-p.y)*.02*dt;p.vx*=Math.pow(.86,dt);p.vy*=Math.pow(.86,dt);p.x+=p.vx*dt;p.y+=p.vy*dt}
+  if(pointer.active&&!reduced){const dx=p.x-pointer.x,dy=p.y-pointer.y,d=Math.hypot(dx,dy),radius=Math.min(230,110/scale);if(d<radius){const a=d>.001?Math.atan2(dy,dx):0,f=Math.pow(1-d/radius,1.4)*2.8*dt;p.vx+=Math.cos(a)*f;p.vy+=Math.sin(a)*f}}
+  if(!reduced){p.vx+=(p.hx-p.x)*.015*dt;p.vy+=(p.hy-p.y)*.015*dt;p.vx*=Math.pow(.88,dt);p.vy*=Math.pow(.88,dt);p.x+=p.vx*dt;p.y+=p.vy*dt}
   if(Math.abs(p.vx)+Math.abs(p.vy)+Math.abs(p.x-p.hx)+Math.abs(p.y-p.hy)>.035)moving=true;
   else if(!pointer.active){p.x=p.hx;p.y=p.hy;p.vx=p.vy=0}
-  ctx.fillStyle=p.color;ctx.fillRect(p.x,p.y,p.size,p.size);
+  ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill();
  }
  ctx.restore();settled=!moving;
  if(!reduced&&(moving||pointer.active))raf=requestAnimationFrame(draw);
