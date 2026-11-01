@@ -302,3 +302,34 @@ header{display:grid;grid-template-columns:minmax(0,1fr) auto}
   .trace-insignia{width:118px;right:0;color:#eeede580}
 }
 @media(max-width:365px){.fact .fact-heading{font-size:15px}.fact .fact-index{width:32px;font-size:34px}.fact .fact-slash{left:35px}.fact:nth-child(2n) .fact-slash{right:35px}.fact dd{margin-left:48px}.fact:nth-child(2n) dd{margin-right:48px}}
+
+/* Rain artwork moved into the notes introduction; the notice is a true article. */
+[data-scene='1'] .notes-title{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:12px 24px;align-items:center;padding:21px 0 23px}
+.rain-art.plate{width:100%;max-width:360px;margin:0 0 0 auto;color:#eeede56b;pointer-events:none}
+.rain-art svg{display:block;width:100%;height:auto;overflow:visible}
+.rain-art figcaption{text-align:center;font:5px/1.7 monospace;letter-spacing:1.3px;color:var(--gold-soft);margin-top:2px}
+.rain-drop{opacity:0;will-change:opacity}
+.rain-ripple{opacity:0;will-change:transform,opacity}
+.notes-epigraph{grid-column:1/-1;text-align:center;font:italic 12px/1.8 SimSun,"Songti SC",serif!important;color:#c6c1b4!important;letter-spacing:1px;margin:4px 0 0!important}
+.notice-card{padding:26px 28px 30px;margin:0 0 24px}
+.notice-header{display:flex;align-items:center;justify-content:flex-start;gap:18px;height:auto;min-height:0;padding:0 0 22px;border:0;border-bottom:1px solid #ffffff24}
+.notice-index{font:italic 34px/1 Georgia,serif;color:#c9ad709e}
+.notice-header h2{font:25px/1.4 SimSun,"Songti SC",serif;letter-spacing:3px;margin:6px 0 0}
+.notice-body{max-width:42em;min-height:360px;margin:24px auto 0;color:#d7d4cb;font:15px/2.15 SimSun,"Songti SC",serif;letter-spacing:.5px;overflow-wrap:anywhere}
+.notice-body p{font:inherit;color:inherit;margin:0 0 1.5em}
+.notice-body h3{font:19px/1.6 SimSun,serif;letter-spacing:1px;color:#f0ede4;margin:1.8em 0 .8em}
+.notice-body ul,.notice-body ol{padding-left:1.6em;margin:0 0 1.5em}
+.notice-body .notice-placeholder{font:12px/2 SimSun,serif;color:#b5b0a4;letter-spacing:1px}
+@media(max-width:650px){
+ [data-scene='1'] .notes-title{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:9px 8px;padding:20px 0 18px}
+ .rain-art.plate{min-width:0;margin:0;max-width:none}.rain-art .pm{font-size:8px;letter-spacing:.6px}.rain-art .ps{font-size:11px;letter-spacing:.5px}.rain-art figcaption{font-size:4px;letter-spacing:.4px}
+ .notes-epigraph{font-size:10px!important;letter-spacing:.5px;margin-top:9px!important}
+ .notice-card{padding:21px 18px 24px;margin-bottom:20px}.notice-header{gap:13px;padding:0 0 18px}.notice-index{font-size:29px}.notice-header h2{font-size:23px;margin-top:4px}
+ .notice-body{font-size:14px;line-height:2.1;min-height:310px;margin-top:21px}.notice-body h3{font-size:17px}
+}
+@media(prefers-reduced-motion:reduce){.rain-drop,.rain-ripple{will-change:auto}}
+
+.notice-body .notice-passages{list-style-type:decimal-leading-zero;padding-left:2em;margin:0}
+.notice-passages>li{padding-left:.5em;margin-bottom:1.5em}
+.notice-passages>li::marker{color:#c9ad70b3;font:10px monospace}
+.notice-passages>li>p{margin:0}

@@ -1,0 +1,5 @@
+GSAP 3.15.0
+Copied from the repository lockfile-installed npm package: gsap/dist/gsap.min.js
+The distribution copyright and license notice remain in the JS header.
+License: https://gsap.com/standard-license/
+No CDN or external network request is required at runtime.
