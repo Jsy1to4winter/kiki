@@ -62,7 +62,13 @@ button.addEventListener('click', () => {
     button.setAttribute('aria-expanded', 'true'); pauseButton.hidden = false;
     if (tracks.length) button.setAttribute('aria-label', `下一首，当前：${tracks[index].title}`);
     void play();
-  } else next();
+  } else {
+    expanded = false;
+    control.classList.remove('expanded');
+    button.setAttribute('aria-expanded', 'false');
+    pauseButton.hidden = true;
+    next();
+  }
 });
 pauseButton.addEventListener('click', () => { if (audio.paused) void play(); else audio.pause(); });
 audio.addEventListener('ended', next);
