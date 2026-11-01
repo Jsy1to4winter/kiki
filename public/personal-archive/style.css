@@ -425,3 +425,17 @@ html[data-input='keyboard'] #close-detail:focus-visible{outline:1px solid var(--
 /* Name the frosted panel itself: naming its parent would isolate the backdrop. */
 #camera{view-transition-name:none}
 .scene:not([hidden]){view-transition-name:archive-camera}
+
+/* Compact link cards, roughly half the previous height. */
+.trace-link-grid{gap:10px}
+.trace-link-card{min-height:135px;padding:14px 16px}
+.link-card-top{height:8px;line-height:8px;padding-right:24px;font-size:5px}
+.link-card-top>span:last-child{position:absolute;right:15px;top:12px;font-size:16px;line-height:18px}
+.link-card-glyph,.trace-link-card p{display:none}
+.trace-link-card h2{font-size:17px;line-height:1.4;margin:10px 0 7px;letter-spacing:1px}
+.link-card-state{border:0;padding-top:0;font-size:7px;line-height:11px}
+@media(max-width:650px){
+ .trace-link-grid{gap:10px}
+ .trace-link-card{min-height:88px;padding:13px 16px}
+ .trace-link-card h2{font-size:16px;line-height:1.4;margin:8px 0 5px}
+}
