@@ -439,3 +439,12 @@ html[data-input='keyboard'] #close-detail:focus-visible{outline:1px solid var(--
  .trace-link-card{min-height:88px;padding:13px 16px}
  .trace-link-card h2{font-size:16px;line-height:1.4;margin:8px 0 5px}
 }
+
+/* Invitation opening, using crisp text over the text-free reference artwork. */
+#cover{background:#303030}
+#cover .cover-art{width:100%;height:100%;object-fit:cover;object-position:center;transform:none;filter:none}
+#open-archive{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:22px;width:max-content;max-width:calc(100% - 36px);padding:22px 0;background:none;border:0;text-shadow:0 1px 12px #0006}
+#open-archive>span{font:400 21px/1.6 "PingFang SC","Microsoft YaHei",Arial,sans-serif;letter-spacing:5px;white-space:nowrap;padding-left:5px}
+#open-archive::before,#open-archive::after{content:'';display:block;width:42px;height:1px;background:#ffffff6b;flex:none}
+@media(max-width:650px){#open-archive{gap:14px}#open-archive>span{font-size:18px;letter-spacing:3px;padding-left:3px}#open-archive::before,#open-archive::after{width:25px}}
+html[data-input='pointer'] dialog button:focus,html[data-input='pointer'] dialog button:focus-visible{outline:none}

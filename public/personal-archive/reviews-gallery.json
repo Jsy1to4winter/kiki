@@ -1,0 +1,20 @@
+{
+  "description": "以下三张是用户提供的参考素材，用于测试相册，非真实评价。替换 items 内的 src、alt、caption 即可加入真实截图。可继续新增条目。",
+  "items": [
+    {
+      "src": "assets/reviews-demo-dialogue.jpg",
+      "alt": "对话气泡参考图片",
+      "caption": "01 / 对话参考 · 示意图片，待替换"
+    },
+    {
+      "src": "assets/reviews-demo-stars.jpg",
+      "alt": "环形星芒装饰参考图片",
+      "caption": "02 / 星芒参考 · 示意图片，待替换"
+    },
+    {
+      "src": "assets/reviews-demo-orbit.jpg",
+      "alt": "轨道与星芒装饰参考图片",
+      "caption": "03 / 轨道参考 · 示意图片，待替换"
+    }
+  ]
+}

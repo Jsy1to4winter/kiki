@@ -1,0 +1,1 @@
+{"description":"每个邮票对应一个图片相册。images 中可填图片路径，例如 assets/photo.jpg，或 {\"src\":\"assets/photo.jpg\",\"caption\":\"说明\"}。","items":[{"id":"stamp-01","title":"把夜晚折起来","images":[]},{"id":"stamp-02","title":"偏离既定轨道","images":[]},{"id":"stamp-03","title":"留给下一页","images":[]}]}
