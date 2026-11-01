@@ -112,8 +112,27 @@ header{display:grid;grid-template-columns:minmax(0,1fr) auto}
 
 /* Cathedral light, sheer glass panels and a feathered editorial portrait. */
 :root{--gold:#c9ad70;--gold-soft:#dfc994}
-.scene{background:linear-gradient(125deg,#171a1d42,#171a1d2b);text-shadow:0 1px 5px #0005;border-color:#ffffff2e;box-shadow:inset 0 1px 0 #ffffff24,0 16px 45px #0002;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
-.profile-id,.soft-card,.note-row,.review,.trace-card{background:linear-gradient(140deg,#ffffff0c,#ffffff03);border-color:#ffffff26}
+.scene{background:linear-gradient(125deg,rgba(66,69,72,.48),rgba(28,31,34,.42));text-shadow:0 1px 5px #0005;border-color:#ffffff42;box-shadow:inset 0 1px 0 #ffffff35,inset 0 -1px 0 #ffffff0b,0 16px 45px #0003;backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px)}
+.profile-id,.soft-card,.note-row,.review,.trace-card{background:linear-gradient(140deg,rgba(131,136,141,.17),rgba(43,47,51,.31));border-color:#ffffff38;box-shadow:inset 0 1px 0 #ffffff20,0 4px 16px #0001}
 .grain{opacity:.018}
 .line-icon{color:var(--gold);font-family:Georgia,serif}
-@media(max-width:650px){.background{background-position:57% center}.scene{backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}}
+@media(max-width:650px){.background{background-position:57% center}.scene{backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}}
+
+/* Soft-edged supplied illustration and staggered personal facts. */
+.profile-composition{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;position:relative;min-height:410px;margin:22px -12px 30px}
+.profile-figure{align-self:stretch;position:relative;min-width:0;margin:0;isolation:isolate}
+.profile-figure img{display:block;width:100%;height:100%;max-height:470px;object-fit:contain;object-position:center bottom;mask-image:radial-gradient(ellipse 70% 65% at 50% 43%,#000 47%,#000b 68%,transparent 97%);-webkit-mask-image:radial-gradient(ellipse 70% 65% at 50% 43%,#000 47%,#000b 68%,transparent 97%)}
+.profile-figure figcaption{position:absolute;bottom:6px;left:14px;font:6px monospace;letter-spacing:2px;color:var(--gold-soft)}
+.profile-facts{display:flex;flex-direction:column;gap:25px;margin:10px 0;min-width:0;padding:0 5px 12px 0}
+.fact{max-width:100%;width:max-content}
+.fact dt{display:table;border-bottom:1px solid #ffffff60;padding-bottom:5px;font:16px/1.4 SimSun,"Songti SC",serif;letter-spacing:2px;color:#eeece6}
+.fact dt span{font:6px monospace;letter-spacing:1px;color:var(--gold-soft);margin-left:7px}
+.fact dd{display:flex;align-items:center;gap:7px;margin:7px 0 0;font-size:12px;line-height:1.6;color:#bdbab3;overflow-wrap:anywhere}
+.fact dd i{width:5px;height:11px;flex:none;background:var(--gold);box-shadow:0 0 12px #c9ad7022}
+.fact-name{align-self:flex-start}.fact-age{align-self:flex-end;margin-right:8%}.fact-skills{align-self:center}.fact-tags{align-self:flex-end}.fact-avatar{align-self:center;margin-left:-8%}
+@media(max-width:650px){.background{background-position:57% center}.scene{backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}.profile-composition{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:8px;min-height:295px;margin:18px -13px 24px}.profile-figure img{max-height:330px;object-fit:contain;object-position:center}.profile-facts{gap:20px;padding-right:2px}.fact dt{font-size:13px;letter-spacing:1px;padding-bottom:4px}.fact dt span{font-size:4.5px;letter-spacing:.5px;margin-left:4px}.fact dd{font-size:10px;gap:5px;margin-top:5px}.fact dd i{width:4px;height:9px}.profile-figure figcaption{font-size:4px;letter-spacing:.6px;left:5px}.fact-age{margin-right:0}}
+@media(max-width:365px){.profile-composition{min-height:285px;gap:4px}.profile-facts{gap:18px}.fact dt{font-size:12px}.fact dt span{font-size:4px;margin-left:3px}}
+
+.note-row:hover{background:linear-gradient(140deg,rgba(146,150,154,.23),rgba(43,47,51,.35))}
+
+.trace-icon{color:var(--gold);font-family:Georgia,serif}
