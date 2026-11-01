@@ -73,3 +73,39 @@ nav#nav .no-icon .nav-label{font-size:9px;letter-spacing:1px}
 
 /* Keep the page background stable; glass is reserved for controls. */
 .halo{display:none}
+
+/* Prevent double-tap zoom on controls while preserving pinch zoom on the page. */
+button, #nav {touch-action:manipulation}
+header{display:grid;grid-template-columns:minmax(0,1fr) auto}
+.brand{min-width:0}
+.music-control{width:40px;height:40px;display:flex;align-items:center;gap:0;border:1px solid #ffffff38;border-radius:999px;background:linear-gradient(135deg,#ffffff20,#ffffff09);box-shadow:inset 0 1px 0 #ffffff30,0 4px 14px #0002;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);overflow:hidden;transition:width .55s cubic-bezier(.16,1,.3,1)}
+.music-control.expanded{width:210px}
+#music-button{display:grid;place-items:center;width:38px;height:38px;flex:0 0 38px;padding:7px;border-radius:50%}
+#music-button img{width:24px;height:24px;pointer-events:none}
+.music-title-window{flex:1;min-width:0;overflow:hidden;opacity:0;transition:opacity .35s .15s;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.expanded .music-title-window{opacity:1}
+.music-title-loop{display:flex;width:max-content;animation:music-title-drift 13s linear infinite;animation-play-state:paused}
+.expanded.playing .music-title-loop{animation-play-state:running}
+.music-title-loop span{flex:none;padding:0 20px;font-size:10px;letter-spacing:1px;white-space:nowrap}
+@keyframes music-title-drift{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+#music-pause{flex:0 0 30px;width:30px;height:36px;font-size:13px;padding:0;border-radius:50%;color:#eee}
+#music-pause[hidden]{display:none}
+.now-playing{display:flex;align-items:center;gap:18px;width:min(100%,830px);min-height:72px;margin:12px auto 0;color:#ccc}
+.lyric-song{flex:0 1 auto;max-width:45%;font:12px/1.6 SimSun,"Songti SC",serif;letter-spacing:.8px}
+.lyric-window{height:72px;overflow:hidden;min-width:0;flex:1;mask-image:linear-gradient(transparent,#000 35%,#000 65%,transparent);-webkit-mask-image:linear-gradient(transparent,#000 35%,#000 65%,transparent)}
+.lyric-window[hidden]{display:none}
+.lyric-reel{transition:transform 1.2s cubic-bezier(.22,1,.36,1)}
+.lyric-reel>div{font-size:11px;height:24px;line-height:24px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#999;transition:color .6s}
+.lyric-reel>.current{color:#eeedeb}
+.music-waves{display:flex;gap:3px;align-items:center;height:18px}
+.music-waves i{width:2px;height:6px;background:#ccc;border-radius:2px}
+.playing .music-waves i{animation:music-wave 1s ease-in-out infinite alternate}
+.playing .music-waves i:nth-child(2){animation-delay:-.4s}
+.playing .music-waves i:nth-child(3){animation-delay:-.7s}
+@keyframes music-wave{to{height:16px;opacity:.5}}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+#close-detail{width:40px;height:40px;background:linear-gradient(145deg,#ffffff20,#ffffff08);border:1px solid #ffffff38;box-shadow:inset 0 1px 0 #ffffff24}
+#close-detail img{width:25px;height:25px;pointer-events:none}
+.now-playing+.visually-hidden+audio+.page-meta{margin-top:8px}
+@media(max-width:650px){.music-control.expanded{width:clamp(126px,38vw,180px)}.now-playing{gap:12px;min-height:64px;margin-top:8px}.lyric-song{font-size:10px;max-width:43%}.lyric-reel>div{font-size:10px}.music-title-loop span{font-size:9px;padding:0 16px}}
+@media(prefers-reduced-motion:reduce){.music-control,.music-title-window,.lyric-reel{transition:none}.music-title-loop,.playing .music-waves i{animation:none}}

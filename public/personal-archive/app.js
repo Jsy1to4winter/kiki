@@ -23,3 +23,6 @@ document.addEventListener('keydown',e=>{if(detail.open||!$('#cover').hidden)retu
 
 const cover=$('#cover'),app=$('#app');document.body.classList.add('at-cover');function openArchive(){if(cover.hidden)return;cover.classList.add('departing');app.inert=false;document.body.classList.remove('at-cover');setTimeout(()=>{cover.hidden=true;cover.classList.remove('departing');$('#nav button.selected').focus({preventScroll:true})},reduced?40:650)}
 $('#open-archive').onclick=e=>{e.stopPropagation();openArchive()};cover.onclick=openArchive;
+
+// Prevent native double-tap magnification only on navigation controls.
+$('#nav').addEventListener('dblclick', event => event.preventDefault());
