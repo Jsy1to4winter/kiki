@@ -354,3 +354,74 @@ header{display:grid;grid-template-columns:minmax(0,1fr) auto}
  .notice-header h2{font-size:20px}
 }
 @media(prefers-reduced-motion:reduce){.rain-static-line{opacity:1}.rain-drop,.rain-glow{will-change:auto}}
+
+/* Clean pointer focus without removing keyboard navigation feedback. */
+#close-detail:focus,#close-detail:focus-visible{outline:none}
+html[data-input='keyboard'] #close-detail:focus-visible{outline:1px solid var(--gold);outline-offset:3px}
+
+/* Circular portrait and quiet, staggered underlined facts. */
+.profile-composition{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);min-height:340px;gap:24px;margin:24px 0 30px}
+.profile-figure{width:min(100%,245px);justify-self:center;align-self:center}
+.profile-figure img{width:100%;max-width:100%;height:auto;max-height:none;margin:0;aspect-ratio:1;border-radius:50%;object-fit:cover;object-position:center;mask-image:none;-webkit-mask-image:none;background:linear-gradient(145deg,#ffffff12,#0000001a);border:1px solid #ffffff28}
+.profile-figure figcaption{position:static;padding:0;text-align:center;margin-top:12px}
+.profile-facts{gap:20px;border:0;padding:0;margin:0}
+.profile-facts::before{padding-bottom:4px}.profile-facts::after{display:none}
+.fact,.fact:nth-child(2n){align-self:flex-start;width:max-content;max-width:100%;padding:0;margin:0;border:0}
+.fact::before{display:none}
+.fact:nth-child(2){align-self:flex-end}.fact:nth-child(3){align-self:center}.fact:nth-child(4){align-self:flex-end}.fact:nth-child(5){align-self:center}
+.fact dt,.fact:nth-child(2n) dt{display:table;flex-direction:row;padding:0 0 5px;border-bottom:1px solid #ffffff8a}
+.fact .fact-heading,.fact:nth-child(2n) .fact-heading{display:block;flex:none;margin:0;padding:0;border:0;text-align:left;font:17px/1.35 SimSun,"Songti SC",serif;letter-spacing:1px;color:#eeece5}
+.fact .fact-heading small{display:none}
+.fact dd,.fact:nth-child(2n) dd{display:flex;flex-direction:row;justify-content:flex-start;align-items:center;gap:7px;margin:8px 0 0 10px;font-size:12px;line-height:1.5;letter-spacing:.5px;color:#c7c3b9}
+.fact dd i{width:5px;height:10px;background:var(--gold)}
+.profile-layout{display:block}
+.profile-details{display:flex;flex-direction:column;gap:15px}
+.profile-details>.soft-card{width:100%;min-height:180px;padding:26px}
+.anchor-tag{align-self:center;display:inline-flex;align-items:center;justify-content:center;gap:9px;max-width:100%;padding:9px 17px;border-radius:999px;background:linear-gradient(135deg,#ffffff17,#ffffff06);border:1px solid #ffffff30;box-shadow:inset 0 1px 0 #ffffff20;font-size:10px;line-height:1.5;letter-spacing:.5px;color:#d0cbbf}
+.anchor-tag .line-icon{font:20px/1 Georgia,serif;color:var(--gold)}
+@media(max-width:650px){
+ .profile-composition{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);min-height:310px;gap:16px;margin:22px -4px 26px}
+ .profile-figure{width:min(100%,160px)}.profile-figure img{width:100%;margin:0;max-height:none}.profile-figure figcaption{font-size:4px;letter-spacing:.6px}
+ .profile-facts{gap:18px}.profile-facts::before{font-size:4.5px;letter-spacing:.5px}
+ .fact .fact-heading,.fact:nth-child(2n) .fact-heading{font-size:14px}.fact dd,.fact:nth-child(2n) dd{font-size:10px;margin:6px 0 0 8px;gap:5px}.fact dd i{width:4px;height:9px}
+ .profile-details>.soft-card{min-height:175px;padding:20px}.anchor-tag{padding:8px 13px;font-size:9px;gap:7px}.anchor-tag .line-icon{font-size:18px}
+}
+
+/* Camera advance on flattened snapshots; stable single-panel fallback. */
+#camera{view-transition-name:archive-camera}
+::view-transition{pointer-events:none}
+::view-transition-group(archive-camera){animation-duration:.5s}
+::view-transition-old(archive-camera){animation:archive-camera-out .27s cubic-bezier(.55,0,1,.5) both;mix-blend-mode:normal;transform-origin:50% 35%}
+::view-transition-new(archive-camera){animation:archive-camera-in .3s .19s cubic-bezier(0,.5,.3,1) both;mix-blend-mode:normal;transform-origin:50% 35%}
+::view-transition-old(root){animation:archive-surround-out .32s both;mix-blend-mode:normal}
+::view-transition-new(root){animation:archive-surround-in .42s .06s both;mix-blend-mode:normal}
+@keyframes archive-camera-out{to{transform:scale(1.075);filter:blur(6px);opacity:0}}
+@keyframes archive-camera-in{from{transform:scale(.955);filter:blur(6px);opacity:0}to{transform:scale(1);filter:blur(0);opacity:1}}
+@keyframes archive-surround-out{to{filter:blur(3px);opacity:0}}
+@keyframes archive-surround-in{from{filter:blur(3px);opacity:0}to{filter:blur(0);opacity:1}}
+.scene-content{transform-origin:50% 25%}
+.camera-fallback #app>header,.camera-fallback #now-playing,.camera-fallback .page-meta{filter:blur(2px)}
+@media(prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
+
+.trace-link-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin:26px 0}
+.trace-link-card{display:flex;flex-direction:column;min-width:0;min-height:270px;padding:23px 20px;color:inherit;text-decoration:none;position:relative}
+.link-card-top{display:flex;align-items:center;justify-content:space-between;gap:12px;font:6px monospace;letter-spacing:1px;color:#c1bcaf}
+.link-card-top>span:last-child{font:18px Arial,sans-serif;color:var(--gold-soft)}
+.link-card-glyph{display:block;font:36px/1 Georgia,serif;color:#c9ad70a1;margin:26px 0 21px}
+.trace-link-card h2{font:21px/1.5 SimSun,"Songti SC",serif;letter-spacing:2px;margin:0 0 12px}
+.trace-link-card p{font-size:10px;line-height:1.9;color:#bdb7aa;margin:0 0 18px}
+.link-card-state{display:block;font-size:8px;letter-spacing:.7px;color:#a8a295;border-top:1px solid #ffffff20;padding-top:13px;margin-top:auto}
+.trace-link-card[aria-disabled='true']{cursor:default}
+.trace-link-card[href]{transition:border-color .2s,background .2s}
+.trace-link-card[href]:hover{border-color:#c9ad7070;background:linear-gradient(135deg,#ffffff18,#ffffff09)}
+.trace-link-card[href]:focus-visible{outline:1px solid var(--gold);outline-offset:3px}
+@media(max-width:650px){
+ .trace-link-grid{grid-template-columns:1fr;gap:13px;margin:23px 0}
+ .trace-link-card{min-height:165px;padding:20px 22px}
+ .link-card-glyph{position:absolute;right:22px;top:55px;font-size:36px;margin:0;color:#c9ad7070}
+ .trace-link-card h2{font-size:21px;margin:17px 0 7px}.trace-link-card p{font-size:9px;margin-bottom:15px;padding-right:25px}
+ .link-card-state{font-size:8px;padding-top:11px}
+}
+/* Name the frosted panel itself: naming its parent would isolate the backdrop. */
+#camera{view-transition-name:none}
+.scene:not([hidden]){view-transition-name:archive-camera}
