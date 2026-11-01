@@ -333,3 +333,24 @@ header{display:grid;grid-template-columns:minmax(0,1fr) auto}
 .notice-passages>li{padding-left:.5em;margin-bottom:1.5em}
 .notice-passages>li::marker{color:#c9ad70b3;font:10px monospace}
 .notice-passages>li>p{margin:0}
+
+/* The rain fills the former heading area; body copy stays compact. */
+[data-scene='1'] .notes-title{display:block;padding:19px 0 22px}
+[data-scene='1'] .rain-art.plate{max-width:none;width:100%;margin:0}
+[data-scene='1'] .rain-art svg{overflow:hidden}
+[data-scene='1'] .notes-epigraph{margin-top:15px!important}
+.rain-static-line{opacity:0}
+.rain-drop{stroke-dasharray:none;opacity:0;will-change:transform,opacity}
+.rain-glow{opacity:0;will-change:transform,opacity}
+.notice-body{max-width:48em;font-size:12px;line-height:2.05;letter-spacing:.25px}
+.notice-passages>li{margin-bottom:1.45em}
+.notice-passages>li::marker{font-size:9px}
+.notice-header h2{font-size:21px}
+@media(max-width:650px){
+ [data-scene='1'] .notes-title{display:block;padding:17px 0 20px}
+ [data-scene='1'] .rain-art figcaption{font-size:5px;letter-spacing:1px}
+ [data-scene='1'] .notes-epigraph{font-size:10px!important}
+ .notice-body{font-size:11px;line-height:2.05;letter-spacing:.2px;margin-top:19px}
+ .notice-header h2{font-size:20px}
+}
+@media(prefers-reduced-motion:reduce){.rain-static-line{opacity:1}.rain-drop,.rain-glow{will-change:auto}}
