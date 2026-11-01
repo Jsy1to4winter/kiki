@@ -202,3 +202,103 @@ header{display:grid;grid-template-columns:minmax(0,1fr) auto}
  .trace-card h2,.trace-card>p,.trace-line{max-width:100%}
 }
 @media(max-width:365px){.editorial-title{grid-template-columns:minmax(0,1fr) 77px}.section-emblem{width:77px}.editorial-title h1{font-size:24px}.editorial-title h1 em{font-size:14px}.fact .fact-heading{font-size:13px}.fact .fact-index{font-size:20px;min-width:22px}}
+
+/* ===== editorial-02 ===== */
+
+/* ---- 自我：斜线编号索引（参考：斜杠楼层标识 + 错落下划线坐标） ---- */
+.profile-composition{min-height:440px;align-items:center}
+.profile-figure{align-self:center}
+.profile-figure img{max-height:430px}
+.profile-figure figcaption{position:static;display:block;margin-top:4px;padding-left:14px}
+.profile-facts{gap:0;margin:0;padding:0;border:0;position:relative}
+.profile-facts::before{content:'PROFILE / 个人切片';display:block;padding:0 0 10px;font:6px monospace;letter-spacing:1.3px;color:var(--gold-soft)}
+.profile-facts::after{content:'05 FIELDS / UNFILLED';display:block;margin-top:6px;padding-top:10px;border-top:1px solid #ffffff1c;text-align:right;font:5.5px monospace;letter-spacing:1.4px;color:#ffffff6b}
+.fact{position:relative;width:100%;max-width:100%;align-self:auto;margin:0;padding:0 14% 14px 0;border:0}
+.fact:nth-child(2n){padding:0 0 14px 14%}
+.fact::before{display:none}
+.fact dt{display:flex;align-items:flex-end;gap:0;border:0;padding:0;font:inherit;letter-spacing:0}
+.fact .fact-index{display:block;flex:none;width:46px;min-width:0;margin:0;font:italic 400 48px/.86 Georgia,serif;letter-spacing:-3px;color:#c9ad7026;text-shadow:none}
+@supports (-webkit-text-stroke:1px #000){.fact .fact-index{color:transparent;-webkit-text-stroke:.8px #c9ad70d0}}
+.fact .fact-slash{position:absolute;display:block;left:50px;top:0;bottom:9px;width:1px;background:linear-gradient(180deg,transparent,#ffffff80 16%,#ffffff80 84%,transparent);transform:rotate(24deg);pointer-events:none}
+.fact .fact-heading{display:block;flex:1;min-width:0;margin:0 0 0 22px;padding:0 0 6px;border-bottom:1px solid #ffffff55;font:21px/1.2 SimSun,"Songti SC",serif;letter-spacing:2px;color:#f4f1e8}
+.fact .fact-heading small{display:block;margin:4px 0 0;font:5.5px/1.4 monospace;letter-spacing:1.4px;color:var(--gold-soft)}
+.fact dd{display:flex;align-items:center;gap:7px;margin:9px 0 0 68px;font-size:12px;letter-spacing:1px;color:#c9c5ba}
+.fact dd i{width:5px;height:5px;flex:none;background:var(--gold);box-shadow:none}
+.fact:nth-child(2n) dt{flex-direction:row-reverse}
+.fact:nth-child(2n) .fact-slash{left:auto;right:50px;transform:rotate(24deg)}
+.fact:nth-child(2n) .fact-heading{margin:0 22px 0 0;text-align:right}
+.fact:nth-child(2n) dd{margin:9px 68px 0 0;justify-content:flex-end;flex-direction:row-reverse}
+.fact:nth-child(2n) .fact-index{text-align:right}
+
+/* ---- 通用：标尺与线稿底板 ---- */
+.ruler{position:relative;display:flex;align-items:center;gap:10px;margin:2px 0 22px;height:16px;color:#eeede566;font:5.5px monospace;letter-spacing:1.2px;pointer-events:none}
+.ruler>span{flex:none;color:#ffffff7a}
+.ruler>i{flex:1;height:5px;background:repeating-linear-gradient(90deg,#ffffff4a 0 1px,transparent 1px 7px) left bottom/100% 100% no-repeat,linear-gradient(#ffffff30,#ffffff30) left bottom/100% 1px no-repeat;position:relative}
+.ruler>i::after{content:'';position:absolute;left:calc(var(--p)*100%);bottom:0;width:5px;height:5px;margin-left:-2.5px;background:var(--gold);transform:translateY(2px) rotate(45deg)}
+.plate{position:relative;max-width:440px;margin:14px auto 0;color:#eeede566;pointer-events:none}
+.plate svg{display:block;width:100%;height:auto;overflow:visible}
+.plate svg *{vector-effect:non-scaling-stroke}
+.plate text{stroke:none;fill:currentColor}
+.plate .pm{font:7px monospace;letter-spacing:1.1px;fill:#ffffff8a}
+.plate .ps{font:9.5px SimSun,"Songti SC",serif;letter-spacing:1.5px;fill:#e7e4da}
+.plate .pg{fill:var(--gold-soft)}
+.plate .dim{fill:#ffffff45}
+.plate .dim2{fill:#ffffff70}
+
+/* ---- 随笔 ---- */
+.thought-map{min-height:0;padding:16px 0 8px;margin-top:22px;border-top:1px solid #ffffff1c;overflow:visible}
+.thought-map .plate-notes{margin-top:10px}
+.thought-map blockquote{margin:6px 0 4px}
+
+/* ---- 私藏 ---- */
+.collection-register{padding-top:20px}
+.collection-register>.plate-collection{margin-top:6px;margin-bottom:6px}
+.coord-list{display:flex;flex-direction:column;gap:20px;margin:10px 0 6px}
+.coord{margin-left:calc(var(--i)*17%);width:max-content;max-width:calc(100% - var(--i)*17%)}
+.coord u{display:inline-block;padding-bottom:3px;font:14px/1.2 Helvetica,Arial,sans-serif;letter-spacing:.3px;color:#efede6;text-decoration:none;border-bottom:1px solid #ffffff90}
+.coord span{display:flex;align-items:center;gap:8px;margin:8px 0 0 14px;font:12px/1.5 SimSun,"Songti SC",serif;letter-spacing:1.5px;color:#d6d2c7}
+.coord span i{width:6px;height:11px;flex:none;border:0;border-radius:0;background:var(--gold)}
+.coord.is-empty u{color:#ffffff66;border-bottom-color:#ffffff30}
+.coord.is-empty span{color:#ffffff5c}
+.coord.is-empty span i{background:#c9ad7055}
+.collection-register>div.coord-list{display:flex;flex-direction:column;align-items:flex-start;gap:20px;margin:12px 0 6px;font-size:inherit}
+.collection-register>div.coord-list>.coord{display:block}
+.collection-register>div.plate{display:block;margin:6px auto;font-size:inherit;gap:0}
+
+/* ---- 评价 ---- */
+.echo-map{padding-top:18px}
+.echo-map .plate-echo{margin-top:6px;margin-bottom:6px}
+
+/* ---- 痕迹 ---- */
+.trace-insignia{position:absolute;width:112px;right:6px;top:8px;bottom:8px;color:#eeede580;z-index:-1;pointer-events:none}
+.trace-insignia svg{display:block;width:100%;height:100%}
+.trace-insignia svg *{vector-effect:non-scaling-stroke}
+.phase-strip{margin-top:26px;padding-top:18px;border-top:1px solid #ffffff1c}
+.phase-strip .plate-phase{margin-top:8px}
+
+@media(max-width:650px){
+  .profile-composition{min-height:392px;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:4px;margin:18px -13px 24px}
+  .profile-figure img{max-height:360px;width:114%;max-width:none;margin-left:-7%}
+  .profile-figure figcaption{padding-left:2px;font-size:4.5px}
+  .profile-facts::before{font-size:4.5px;letter-spacing:.7px;padding-bottom:8px}
+  .profile-facts::after{font-size:4.5px;letter-spacing:.8px;padding-top:8px}
+  .fact{padding:0 10% 11px 0}
+  .fact:nth-child(2n){padding:0 0 11px 10%}
+  .fact .fact-index{width:36px;font-size:38px;letter-spacing:-2px}
+  .fact .fact-slash{left:39px;bottom:7px}
+  .fact:nth-child(2n) .fact-slash{right:39px;left:auto}
+  .fact .fact-heading{margin-left:17px;padding-bottom:5px;font-size:17px;letter-spacing:1px}
+  .fact .fact-heading small{font-size:4.5px;letter-spacing:.9px;margin-top:3px}
+  .fact dd{margin:7px 0 0 53px;font-size:10px;letter-spacing:.5px;gap:5px}
+  .fact dd i{width:4px;height:4px}
+  .fact:nth-child(2n) .fact-heading{margin:0 17px 0 0}
+  .fact:nth-child(2n) dd{margin:7px 53px 0 0}
+  .ruler{margin-bottom:18px;font-size:4.5px;gap:8px}
+  .plate .pm{font-size:6.5px;letter-spacing:.8px}
+  .plate .ps{font-size:9px;letter-spacing:1px}
+  .coord u{font-size:13px}
+  .coord span{font-size:11px;margin-left:12px}
+  .collection-register>div.coord-list{gap:16px}
+  .trace-insignia{width:118px;right:0;color:#eeede580}
+}
+@media(max-width:365px){.fact .fact-heading{font-size:15px}.fact .fact-index{width:32px;font-size:34px}.fact .fact-slash{left:35px}.fact:nth-child(2n) .fact-slash{right:35px}.fact dd{margin-left:48px}.fact:nth-child(2n) dd{margin-right:48px}}
