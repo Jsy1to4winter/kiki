@@ -43,16 +43,16 @@ nav#nav{position:fixed;bottom:calc(17px + env(safe-area-inset-bottom));left:50%;
 @media(max-width:650px){.social-profile.slim-profile{top:35px;padding:8px 12px 9px}.slim-profile .social-top{padding-bottom:4px;font-size:3.5px}.slim-stats{padding-top:6px;padding-bottom:6px}.slim-stats b{font-size:12px}.slim-stats span{font-size:5px;margin-top:3px}.slim-bio h1{display:inline;font-size:11px}.slim-bio>small{display:inline;font-size:3.5px;margin-left:5px}.slim-bio p{font-size:6px;line-height:1.5;margin:5px 0 3px}.slim-bio>span{font-size:4.5px}.collage-intro{height:185px}.collage-caption{bottom:0}}
 
 /* Compact floating glass navigation. */
-nav#nav{width:300px;max-width:calc(100% - 36px);min-height:60px;padding:5px 8px;align-items:center;justify-content:space-between;gap:3px;border-radius:999px;background:linear-gradient(135deg,#ffffff20,#ffffff0a);border:1px solid #ffffff30;box-shadow:0 8px 28px #0003,inset 0 1px 0 #ffffff2b;backdrop-filter:blur(28px) saturate(120%);-webkit-backdrop-filter:blur(28px) saturate(120%)}
-nav#nav>button.nav-item{flex:0 0 48px;width:48px;height:48px;min-width:0;padding:4px 0;display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center;border-radius:50%;appearance:none;-webkit-appearance:none;border:1px solid transparent;background:transparent;color:#d0d0d0;box-shadow:none;position:relative;transition:background .25s,border-color .25s,box-shadow .25s,color .25s}
+nav#nav{width:240px;max-width:calc(100% - 36px);min-height:48px;padding:3px 6px;align-items:center;justify-content:space-between;gap:3px;border-radius:999px;background:linear-gradient(135deg,#ffffff20,#ffffff0a);border:1px solid #ffffff30;box-shadow:0 8px 28px #0003,inset 0 1px 0 #ffffff2b;backdrop-filter:blur(28px) saturate(120%);-webkit-backdrop-filter:blur(28px) saturate(120%)}
+nav#nav>button.nav-item{flex:0 0 40px;width:40px;height:40px;min-width:0;padding:4px 0;display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center;border-radius:50%;appearance:none;-webkit-appearance:none;border:1px solid transparent;background:transparent;color:#d0d0d0;box-shadow:none;position:relative;transition:background .25s,border-color .25s,box-shadow .25s,color .25s}
 nav#nav>button.nav-item.selected{background:linear-gradient(145deg,#ffffff30,#ffffff10);border-color:#ffffff50;color:#fff;box-shadow:inset 0 1px 0 #ffffff42,0 3px 10px #0002;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
 nav#nav>button.nav-item:hover{background-color:#ffffff12;color:#fff}
-nav#nav .nav-icon{display:flex;width:21px;height:21px;align-items:center;justify-content:center;flex-shrink:0}
-nav#nav .nav-icon img{display:block;width:21px;height:21px;object-fit:contain;opacity:.9;filter:brightness(1.25) drop-shadow(0 1px 2px #0003);transition:opacity .25s}
+nav#nav .nav-icon{display:flex;width:17px;height:17px;align-items:center;justify-content:center;flex-shrink:0}
+nav#nav .nav-icon img{display:block;width:17px;height:17px;object-fit:contain;opacity:.9;filter:brightness(1.25) drop-shadow(0 1px 2px #0003);transition:opacity .25s}
 nav#nav .selected .nav-icon img{opacity:1;filter:brightness(1.4) drop-shadow(0 1px 2px #0003)}
-nav#nav .nav-label{font-size:8px;line-height:11px;letter-spacing:1px;font-weight:400}
+nav#nav .nav-label{font-size:7px;line-height:10px;letter-spacing:1px;font-weight:400}
 nav#nav>button.nav-item.no-icon{gap:0}
-nav#nav .no-icon .nav-label{font-size:10px;letter-spacing:1px}
+nav#nav .no-icon .nav-label{font-size:9px;letter-spacing:1px}
 #app{padding-bottom:calc(105px + env(safe-area-inset-bottom))}
 
 /* Shared translucent pill actions, including next/previous and replay. */
@@ -61,11 +61,11 @@ nav#nav .no-icon .nav-label{font-size:10px;letter-spacing:1px}
 .card-end b,.replay span{margin-left:0}
 .dialog-top button{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;border:1px solid #ffffff30;background:#ffffff10}
 @media(max-width:650px){
- nav#nav{width:300px;max-width:calc(100% - 36px);min-height:60px;padding:5px 8px;gap:3px;bottom:calc(12px + env(safe-area-inset-bottom))}
- nav#nav>button.nav-item{flex-basis:48px;width:48px;height:48px;padding:4px 0;gap:2px}
- nav#nav .nav-icon,nav#nav .nav-icon img{width:21px;height:21px}
- nav#nav .nav-label{font-size:8px;letter-spacing:.6px}
- nav#nav .no-icon .nav-label{font-size:10px}
+ nav#nav{width:240px;max-width:calc(100% - 36px);min-height:48px;padding:3px 6px;gap:3px;bottom:calc(12px + env(safe-area-inset-bottom))}
+ nav#nav>button.nav-item{flex-basis:40px;width:40px;height:40px;padding:4px 0;gap:2px}
+ nav#nav .nav-icon,nav#nav .nav-icon img{width:17px;height:17px}
+ nav#nav .nav-label{font-size:7px;letter-spacing:.6px}
+ nav#nav .no-icon .nav-label{font-size:9px}
  #app{padding-bottom:calc(94px + env(safe-area-inset-bottom))}
  .card-end button,.card-end button:last-child,.replay{padding:10px 14px;font-size:8px;gap:9px;min-height:40px}
 }
