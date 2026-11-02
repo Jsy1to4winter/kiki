@@ -18,3 +18,21 @@
  .profile-composition{min-height:240px;margin:14px 0 25px;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:17px}
  .profile-index-panel .fact,.profile-index-panel .fact:nth-child(n){min-height:45px}
 }
+/* Let the supplied answers carry more weight than the numbered labels. */
+.profile-index-panel .fact,.profile-index-panel .fact:nth-child(n){grid-template-columns:40% 60%;min-height:59px}
+.profile-index-panel .profile-facts:after{left:40%}
+.profile-index-panel .fact:before{left:calc(40% - 2px)}
+.profile-index-panel .fact dt,.profile-index-panel .fact:nth-child(n) dt{gap:7px;padding-right:13px}
+.profile-index-panel .fact .fact-heading,.profile-index-panel .fact:nth-child(n) .fact-heading{font-size:11px;letter-spacing:0}
+.profile-index-panel .fact-number{font-size:22px;min-width:24px}
+.profile-index-panel .fact dd,.profile-index-panel .fact:nth-child(n) dd{font-size:16px;line-height:1.7;padding-left:16px;color:#eeece5}
+@media(max-width:650px){
+ .profile-composition{grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr);gap:14px}
+ .profile-index-panel .fact,.profile-index-panel .fact:nth-child(n){min-height:49px;grid-template-columns:39% 61%}
+ .profile-index-panel .profile-facts:after{left:39%}
+ .profile-index-panel .fact:before{left:calc(39% - 2px)}
+ .profile-index-panel .fact dt,.profile-index-panel .fact:nth-child(n) dt{gap:5px;padding-right:10px}
+ .profile-index-panel .fact .fact-heading,.profile-index-panel .fact:nth-child(n) .fact-heading{font-size:9px}
+ .profile-index-panel .fact-number{font-size:18px;min-width:19px}
+ .profile-index-panel .fact dd,.profile-index-panel .fact:nth-child(n) dd{font-size:13px;padding-left:12px}
+}

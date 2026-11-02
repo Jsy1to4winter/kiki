@@ -491,3 +491,11 @@ html[data-input='pointer'] dialog button:focus,html[data-input='pointer'] dialog
 @media(max-width:650px){.header-tools{gap:7px}#profile-edit{width:36px;height:36px;flex-basis:36px;padding:7px}#profile-edit img{width:21px;height:21px}.profile-editor{padding:20px;max-height:88svh}.editor-fields{grid-template-columns:1fr;gap:0}.editor-storage-note{font-size:10px}.editor-actions{gap:8px}.editor-actions button{font-size:10px;padding:9px 12px}.music-control.expanded{width:clamp(116px,36vw,170px)}}
 .profile-editor button:focus-visible,#profile-edit:focus-visible{outline:1px solid var(--gold);outline-offset:3px}
 html[data-input='pointer'] #profile-edit:focus{outline:none}
+.profile-details>.soft-card>p{font-size:15px;line-height:1.95;color:#dedbd3}
+.notice-passages p{white-space:pre-line}
+#nav .nav-label{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:650px){.profile-details>.soft-card>p{font-size:14px}}
+.profile-access{max-width:420px;padding:26px}
+.profile-access .editor-top{margin-bottom:24px}
+.profile-access .editor-top h2{font-size:25px}
+#profile-access-status{font-size:12px;line-height:1.7;min-height:22px;color:#d7caa5}

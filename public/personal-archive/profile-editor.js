@@ -13,6 +13,7 @@
     anchor:'雾山影｜UTC+8', avatar:'assets/profile-glasses-avatar.png',
     links:[{title:'片刻记录',description:'留下一些不想遗忘的瞬间。',url:''},{title:'偏爱收集',description:'存放作品、灵感与心头所好。',url:''},{title:'未完之页',description:'给下一段故事留一个入口。',url:''}]
   };
+  Object.assign(BASE,{"introTitle": "自我介绍", "noticeTitle": "须知", "notice": "不是雨季，却接连下了几天的雨。几天不在家，马桶里都生出了跟头虫\n\n好像是花粉或蛾子粉尘通过窗户带进来的。按下冲水按钮，蠕动的跟头虫随着旋涡消失了\n\n构成世界的物质出人意料地容易腐烂\n\n擦地，腾空冰箱，往浴室里喷了酸性洗涤剂之后，我躺在地板上。\n\n油地毡冰冷的气息直抵脸颊。外面不断传来噪声。那是汽车画着犹如星星轨迹般的长尾巴行驶在公路上的声音。\n\n感觉疲劳缓解了，身体里的血液也恢复了正常的速度。我像死了似的趴了会儿，竟然在地板上睡着了。\n\n偶尔传来救护车的警笛声和摩托车的噪声。陨石没能进入睡梦深处\n\n只在梦境之外撕破凌乱的星云，一闪而过。我蜷缩起身体。我", "reviewText": "把被记住的话，收进这里。", "navLabels": ["自我", "随笔", "私藏", "评价", "痕迹"]});
   let published = clone(BASE), saved = clone(BASE), formBase = clone(BASE);
   function message(text, error=false) { status.textContent=text;status.dataset.error=String(error); }
   function text(value, limit, fallback='') {
@@ -39,6 +40,8 @@
     keys.forEach(key=>config.facts[key]=text(value.facts?.[key],key==='age'?40:160));
     config.intro=text(value.intro,12000,BASE.intro);
     config.anchor=text(value.anchor,120,BASE.anchor).replace(/^锚点[:：]\s*/,'')||BASE.anchor;
+    ['introTitle','noticeTitle','notice','reviewText'].forEach(key=>config[key]=text(value[key],key==='notice'?30000:key==='reviewText'?1000:80,BASE[key]));
+    config.navLabels=BASE.navLabels.map((label,i)=>text(value.navLabels?.[i],12,label)||label);
     config.avatar=avatarURL(value.avatar||BASE.avatar);
     config.links=BASE.links.map((fallback,i)=>({title:text(value.links?.[i]?.title,80,fallback.title)||fallback.title,description:text(value.links?.[i]?.description,300,fallback.description),url:linkURL(value.links?.[i]?.url||'')}));
     return config;
@@ -49,6 +52,12 @@
       const marker=document.createElement('i');marker.setAttribute('aria-hidden','true');
       target.replaceChildren(marker,document.createTextNode(config.facts[key]||'待填写'));
     });
+    $('.profile-details>.soft-card>h3').textContent=config.introTitle;
+    $('#notice-title').textContent=config.noticeTitle;
+    $('.notice-passages').replaceChildren(...config.notice.split(/\n\s*\n/).filter(Boolean).map(content=>{const li=document.createElement('li'),p=document.createElement('p');p.textContent=content;li.append(p);return li;}));
+    $('.reviews-archive-heading>p').textContent=config.reviewText;
+    document.querySelectorAll('#nav .nav-item').forEach((button,i)=>{button.querySelector('.nav-label').textContent=config.navLabels[i];button.setAttribute('aria-label',config.navLabels[i]);});
+    document.querySelectorAll('.card-end [data-next]').forEach(button=>{const scene=button.closest('[data-scene]');const i=Number(scene.dataset.scene);if(i<4){const label=i===0?'开始了解 / ':'继续 / ';button.firstChild.textContent=label+config.navLabels[i+1]+' ';}});
     const intro=$('.profile-details>.soft-card>p');
     if(intro)intro.textContent=config.intro;
     const note=$('.profile-details>.soft-card>small');if(note)note.hidden=config.intro!==BASE.intro;
@@ -80,10 +89,12 @@
     }
     linkFields.append(group);
   });
+  BASE.navLabels.forEach((value,i)=>{const label=document.createElement('label');label.textContent=`第 ${i+1} 项`;const input=document.createElement('input');input.name=`navLabel${i}`;input.maxLength=12;label.append(input);$('#editor-nav-fields').append(label);});
   function field(name){return form.elements.namedItem(name);}
   function fill(config){
     form.reset();formBase=clone(config);
     keys.forEach(key=>field(key).value=config.facts[key]);
+    ['introTitle','noticeTitle','notice','reviewText'].forEach(key=>field(key).value=config[key]);config.navLabels.forEach((label,i)=>field(`navLabel${i}`).value=label);
     field('intro').value=config.intro;field('anchor').value=config.anchor;
     config.links.forEach((entry,i)=>{field(`linkTitle${i}`).value=entry.title;field(`linkURL${i}`).value=entry.url;});
     $('#profile-avatar-file').value='';
@@ -98,25 +109,44 @@
   async function fromForm(){
     const value=clone(formBase);
     keys.forEach(key=>value.facts[key]=field(key).value);
+    ['introTitle','noticeTitle','notice','reviewText'].forEach(key=>value[key]=field(key).value);value.navLabels=BASE.navLabels.map((_,i)=>field(`navLabel${i}`).value);
     value.intro=field('intro').value;value.anchor=field('anchor').value;
     value.links=value.links.map((entry,i)=>({...entry,title:field(`linkTitle${i}`).value,url:field(`linkURL${i}`).value}));
     const file=$('#profile-avatar-file').files[0];if(file)value.avatar=await avatarFile(file);
     return normalize(value);
   }
   const ready=(async()=>{
-    try {const response=await fetch('site-profile.json?v=profile-editor-01');if(response.ok)published=normalize(await response.json());}catch{}
+    try {const response=await fetch('site-profile.json?v=archive-content-02');if(response.ok)published=normalize(await response.json());}catch{}
+    await window.archiveCloud.ready;
+    if(window.archiveCloud.enabled){try{const remote=await window.archiveCloud.getProfile();if(remote)published=normalize(remote);}catch(error){message(error.message,true);}saved=clone(published);apply(saved);$('.editor-storage-note').textContent='已连接 Supabase。保存资料后，所有访客都能看到更新。';$('#profile-reset').textContent='重新载入云端资料';return;}
     saved=clone(published);
     try {const draft=await readDraft();if(draft)saved=normalize(draft);}catch{}
     apply(saved);
   })();
-  trigger.addEventListener('click',async()=>{await ready;fill(saved);message('');modal.showModal();field('name').focus({preventScroll:true});});
+  const accessModal=$('#profile-access'),accessForm=$('#profile-access-form'),password=$('#profile-access-password'),accessStatus=$('#profile-access-status');
+  const cloud=window.archiveCloud;
+  async function verifyAccess(){
+    await cloud.ready;if(!cloud.enabled)return true;
+    if(accessModal.open)return Promise.resolve(false);
+    accessForm.reset();accessStatus.textContent='';accessModal.returnValue='';accessModal.showModal();password.focus({preventScroll:true});
+    return new Promise(resolve=>accessModal.addEventListener('close',()=>{password.value='';resolve(accessModal.returnValue==='accepted');},{once:true}));
+  }
+  window.archiveAuthorize=async()=>{await cloud.ready;return !cloud.enabled||cloud.isAuthenticated()||verifyAccess();};
+  $('#profile-access-close').addEventListener('click',()=>accessModal.close('cancelled'));
+  accessForm.addEventListener('submit',async event=>{
+    event.preventDefault();const button=accessForm.querySelector('[type=submit]');button.disabled=true;accessStatus.textContent='正在验证…';
+    try{await cloud.signIn($('#profile-access-email').value,password.value);accessModal.close('accepted');}
+    catch(error){accessStatus.textContent=error.message;password.value='';password.focus();}
+    finally{button.disabled=false;}
+  });
+  trigger.addEventListener('click',async()=>{await ready;if(!await verifyAccess())return;fill(saved);message('');modal.showModal();modal.scrollTop=0;field('introTitle').focus({preventScroll:true});});
   $('#profile-editor-close').addEventListener('click',()=>modal.close());
   modal.addEventListener('close',()=>trigger.focus({preventScroll:true}));
   modal.addEventListener('click',event=>{if(event.target!==modal)return;const r=modal.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)modal.close();});
   form.addEventListener('submit',async event=>{
     event.preventDefault();const button=form.querySelector('[type="submit"]');button.disabled=true;message('正在保存…');
     try {
-      const config=await fromForm();await writeDraft(config);saved=config;apply(saved);fill(saved);message('已保存到此浏览器。');modal.close();
+      const config=await fromForm();if(cloud.enabled){await cloud.saveProfile(config);published=clone(config);}else await writeDraft(config);saved=config;apply(saved);fill(saved);message('已保存到此浏览器。');modal.close();
     } catch(error){message(error.name==='Error'?error.message:'未能保存，请检查浏览器存储设置；也可以导出发布文件。',true);}
     finally{button.disabled=false;}
   });
@@ -132,6 +162,6 @@
     event.target.value='';
   });
   $('#profile-reset').addEventListener('click',async()=>{
-    try {await removeDraft();saved=clone(published);apply(saved);fill(saved);message('已恢复当前已发布版本。');}catch{message('浏览器未能清除草稿，请检查存储设置。',true);}
+    try {if(cloud.enabled){const remote=await cloud.getProfile();if(remote)published=normalize(remote);}else await removeDraft();saved=clone(published);apply(saved);fill(saved);message('已恢复当前已发布版本。');}catch{message('浏览器未能清除草稿，请检查存储设置。',true);}
   });
 })();
