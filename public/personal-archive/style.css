@@ -509,3 +509,16 @@ html[data-input='pointer'] #profile-edit:focus{outline:none}
 .editor-album-add:disabled{opacity:.5;cursor:wait}
 .collection-summary{padding:16px 26px 24px;text-align:right;font:10px/1.5 monospace;color:var(--gold-soft)}
 #editor-album-list input[hidden]{display:none}
+/* Per-photo deletion stays inside the editor, alongside each thumbnail. */
+.editor-album-photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px;max-height:420px;overflow:auto;overscroll-behavior:contain;padding:2px}
+.editor-album-photos[hidden]{display:none}
+.editor-album-photo{position:relative;min-width:0;padding:6px;border:1px solid #ffffff25;border-radius:9px;background:#ffffff05}
+.editor-album-photo>img{display:block;width:100%;aspect-ratio:1;object-fit:cover;border-radius:5px}
+.editor-photo-name{display:block;font-size:10px;line-height:1.7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:6px 0;color:#c5bfb2}
+.editor-cover-badge{position:absolute;top:11px;left:11px;padding:3px 6px;border-radius:4px;background:#181a1de0;color:#e4d7b2;font:9px/1.4 sans-serif}
+.editor-photo-actions{display:flex;gap:5px;flex-wrap:wrap}
+.editor-photo-actions button{padding:7px 10px;min-height:34px;border:1px solid #ffffff30;border-radius:7px;color:#d6cabc;background:#ffffff07;font-size:11px}
+.editor-album-delete[data-confirming='true']{color:#f0c3b4;border-color:#d89e7d80;background:#a05c3820}
+.editor-photo-actions button:disabled{opacity:.5;cursor:wait}
+.editor-delete-cancel[hidden]{display:none}
+@media(max-width:650px){.editor-album-photos{grid-template-columns:repeat(2,minmax(0,1fr));max-height:360px;gap:10px}.editor-photo-actions button{padding:7px 8px}}

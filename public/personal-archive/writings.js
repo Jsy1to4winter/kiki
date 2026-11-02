@@ -15,6 +15,16 @@
  q('collection-back').onclick=()=>{if(!q('collection-viewer').hidden)grid();else if(showAll){showAll=false;grid()}else dialog.close()};q('collection-close').onclick=()=>dialog.close();q('collection-prev').onclick=()=>view(photo-1);q('collection-next').onclick=()=>view(photo+1);
  window.archiveCollectionManager={
    async albums(){await config;return albums.map(({id,title})=>({id,title}));},
+   async list(index){
+     await config;const published=(albums[index].images||[]).map(item=>({...(typeof item==='string'?{src:item}:item),removable:false}));
+     const records=await localImages(albums[index].id);return [...published,...records.map(record=>({...record,caption:record.caption||record.name,removable:true}))];
+   },
+   async remove(index,id){
+     await config;await window.archiveCloud.ready;
+     if(window.archiveCloud.enabled)await window.archiveCloud.deleteImage(albums[index].id,id);
+     else{const db=await database;await new Promise((resolve,reject)=>{const tx=db.transaction('images','readwrite'),store=tx.objectStore('images'),request=store.get(id);request.onsuccess=()=>{if(request.result?.album===albums[index].id)store.delete(id);};tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error);});}
+     if(dialog.open&&current===index)await load(index);
+   },
    async count(index){await config;return (albums[index].images||[]).length+(await localImages(albums[index].id)).length;},
    async upload(index,files){
      await config;await window.archiveCloud.ready;

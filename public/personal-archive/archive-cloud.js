@@ -39,7 +39,20 @@
   api.saveProfile=async data=>request('/rest/v1/archive_profile?on_conflict=id',{method:'POST',body:{id:'main',data},headers:{Prefer:'resolution=merge-duplicates'},auth:true});
   api.listImages=async album=>{
     const rows=await request('/rest/v1/archive_images?album=eq.'+encodeURIComponent(album)+'&select=id,storage_path,name&order=sort_order.asc');
-    return rows.map(row=>({src:config.url+'/storage/v1/object/public/archive-images/'+row.storage_path.split('/').map(encodeURIComponent).join('/'),caption:row.name,alt:row.name}));
+    return rows.map(row=>({id:row.id,storagePath:row.storage_path,album,removable:true,src:config.url+'/storage/v1/object/public/archive-images/'+row.storage_path.split('/').map(encodeURIComponent).join('/'),caption:row.name,alt:row.name}));
+  };
+  api.deleteImage=async(album,id)=>{
+    if(!['stamp-01','stamp-02','stamp-03','reviews'].includes(album)||typeof id!=='string'||!/^[0-9a-f-]{36}$/i.test(id))throw new Error('图片记录无效，请重新打开编辑面板。');
+    const filter='?album=eq.'+encodeURIComponent(album)+'&id=eq.'+encodeURIComponent(id);
+    const rows=await request('/rest/v1/archive_images'+filter+'&select=id,storage_path',{auth:true});
+    if(!rows.length)return;
+    const path=rows[0].storage_path;
+    if(typeof path!=='string'||!path.startsWith(album+'/')||path.includes('..'))throw new Error('图片记录与相册不匹配，未执行删除。');
+    await request('/storage/v1/object/archive-images',{method:'DELETE',body:{prefixes:[path]},auth:true});
+    try{
+      const removed=await request('/rest/v1/archive_images'+filter,{method:'DELETE',headers:{Prefer:'return=representation'},auth:true});
+      if(!Array.isArray(removed)||removed.length!==1)throw new Error();
+    }catch{throw new Error('图片文件已移除，但相册记录尚未清理。请重试删除完成清理。');}
   };
   api.uploadImages=async(album,files)=>{
     const uploaded=[];
