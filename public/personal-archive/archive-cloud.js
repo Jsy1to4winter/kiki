@@ -3,10 +3,11 @@
   'use strict';
   let config=null,session=null;
   const api={enabled:false};
-  api.ready=fetch('supabase-config.json?v=archive-cloud-01').then(async response=>{
+  api.ready=fetch('supabase-config.json?v=archive-cloud-02',{cache:'no-store'}).then(async response=>{
     if(!response.ok)return;
     const value=await response.json();
     if(!value.enabled)return;
+    api.enabled=true;
     const url=new URL(value.url);
     if(url.protocol!=='https:')throw new Error('Supabase 项目地址必须使用 HTTPS。');
     if(!value.publishableKey)throw new Error('请配置 Supabase Publishable key。');
@@ -14,8 +15,9 @@
   }).catch(error=>{api.error=error.message;});
   async function request(path,{method='GET',body,headers={},auth=false}={}){
     await api.ready;if(!config)throw new Error(api.error||'请先连接 Supabase 项目。');
-    if(auth&&(!session||session.expiresAt<Date.now())){session=null;throw new Error('请先通过编辑入口登录。');}
-    const response=await fetch(config.url+path,{method,headers:{apikey:config.key,...(session?{Authorization:'Bearer '+session.access_token}:{}),...(body&&!(body instanceof Blob)?{'Content-Type':'application/json'}:{}),...headers},body:body instanceof Blob?body:body===undefined?undefined:JSON.stringify(body)});
+    if(session&&session.expiresAt<Date.now())session=null;
+    if(auth&&!session)throw new Error('请先通过编辑入口登录。');
+    const response=await fetch(config.url+path,{method,cache:'no-store',signal:AbortSignal.timeout(20000),headers:{apikey:config.key,...(session?{Authorization:'Bearer '+session.access_token}:{}),...(body&&!(body instanceof Blob)?{'Content-Type':'application/json'}:{}),...headers},body:body instanceof Blob?body:body===undefined?undefined:JSON.stringify(body)});
     if(!response.ok){let detail={};try{detail=await response.json()}catch{}
       if(response.status===401||response.status===403)throw new Error('登录已失效或没有编辑权限，请重新登录。');
       if(detail.error_code==='invalid_credentials')throw new Error('邮箱或密码不正确。');

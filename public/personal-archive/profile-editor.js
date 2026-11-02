@@ -14,7 +14,7 @@
     links:[{title:'片刻记录',description:'留下一些不想遗忘的瞬间。',url:''},{title:'偏爱收集',description:'存放作品、灵感与心头所好。',url:''},{title:'未完之页',description:'给下一段故事留一个入口。',url:''}]
   };
   Object.assign(BASE,{"introTitle": "自我介绍", "noticeTitle": "须知", "notice": "不是雨季，却接连下了几天的雨。几天不在家，马桶里都生出了跟头虫\n\n好像是花粉或蛾子粉尘通过窗户带进来的。按下冲水按钮，蠕动的跟头虫随着旋涡消失了\n\n构成世界的物质出人意料地容易腐烂\n\n擦地，腾空冰箱，往浴室里喷了酸性洗涤剂之后，我躺在地板上。\n\n油地毡冰冷的气息直抵脸颊。外面不断传来噪声。那是汽车画着犹如星星轨迹般的长尾巴行驶在公路上的声音。\n\n感觉疲劳缓解了，身体里的血液也恢复了正常的速度。我像死了似的趴了会儿，竟然在地板上睡着了。\n\n偶尔传来救护车的警笛声和摩托车的噪声。陨石没能进入睡梦深处\n\n只在梦境之外撕破凌乱的星云，一闪而过。我蜷缩起身体。我", "reviewText": "把被记住的话，收进这里。", "navLabels": ["自我", "随笔", "私藏", "评价", "痕迹"]});
-  let published = clone(BASE), saved = clone(BASE), formBase = clone(BASE);
+  let published = clone(BASE), saved = clone(BASE), formBase = clone(BASE), pendingLegacyDraft=null, cloudReadError=null;
   function message(text, error=false) { status.textContent=text;status.dataset.error=String(error); }
   function text(value, limit, fallback='') {
     if (typeof value !== 'string') return fallback;
@@ -118,7 +118,12 @@
   const ready=(async()=>{
     try {const response=await fetch('site-profile.json?v=archive-content-02');if(response.ok)published=normalize(await response.json());}catch{}
     await window.archiveCloud.ready;
-    if(window.archiveCloud.enabled){try{const remote=await window.archiveCloud.getProfile();if(remote)published=normalize(remote);}catch(error){message(error.message,true);}saved=clone(published);apply(saved);$('.editor-storage-note').textContent='已连接 Supabase。保存资料后，所有访客都能看到更新。';$('#profile-reset').textContent='重新载入云端资料';return;}
+    if(window.archiveCloud.enabled){
+      try{const remote=await window.archiveCloud.getProfile();if(remote)published=normalize(remote);else{try{const draft=await readDraft();if(draft)pendingLegacyDraft=normalize(draft);}catch{}}}catch(error){cloudReadError=error.message;}
+      saved=clone(published);apply(saved);
+      $('.editor-storage-note').textContent=cloudReadError?'云端内容暂时未能载入，登录后请先重新载入资料。':'资料与图片保存到云端，所有访客打开或刷新后可见。';
+      $('#profile-reset').textContent='重新载入云端资料';$('#profile-export').textContent='导出资料备份';return;
+    }
     saved=clone(published);
     try {const draft=await readDraft();if(draft)saved=normalize(draft);}catch{}
     apply(saved);
@@ -128,7 +133,7 @@
   async function verifyAccess(){
     await cloud.ready;if(!cloud.enabled)return true;
     if(accessModal.open)return Promise.resolve(false);
-    accessForm.reset();accessStatus.textContent='';accessModal.returnValue='';accessModal.showModal();password.focus({preventScroll:true});
+    accessForm.reset();accessStatus.textContent='';accessModal.returnValue='';accessModal.showModal();$('#profile-access-email').focus({preventScroll:true});
     return new Promise(resolve=>accessModal.addEventListener('close',()=>{password.value='';resolve(accessModal.returnValue==='accepted');},{once:true}));
   }
   window.archiveAuthorize=async()=>{await cloud.ready;return !cloud.enabled||cloud.isAuthenticated()||verifyAccess();};
@@ -139,19 +144,19 @@
     catch(error){accessStatus.textContent=error.message;password.value='';password.focus();}
     finally{button.disabled=false;}
   });
-  trigger.addEventListener('click',async()=>{await ready;if(!await verifyAccess())return;fill(saved);message('');modal.showModal();modal.scrollTop=0;field('introTitle').focus({preventScroll:true});});
+  trigger.addEventListener('click',async()=>{await ready;if(!await verifyAccess())return;fill(pendingLegacyDraft||saved);message(cloudReadError|| (pendingLegacyDraft?'已载入此浏览器之前保存的资料，点击“保存并查看”后同步到云端。':''),!!cloudReadError);modal.showModal();modal.scrollTop=0;field('introTitle').focus({preventScroll:true});});
   $('#profile-editor-close').addEventListener('click',()=>modal.close());
   modal.addEventListener('close',()=>trigger.focus({preventScroll:true}));
   modal.addEventListener('click',event=>{if(event.target!==modal)return;const r=modal.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)modal.close();});
   form.addEventListener('submit',async event=>{
     event.preventDefault();const button=form.querySelector('[type="submit"]');button.disabled=true;message('正在保存…');
     try {
-      const config=await fromForm();if(cloud.enabled){await cloud.saveProfile(config);published=clone(config);}else await writeDraft(config);saved=config;apply(saved);fill(saved);message('已保存到此浏览器。');modal.close();
+      const config=await fromForm();if(cloud.enabled){if(cloudReadError)throw new Error('请先点击“重新载入云端资料”，读取成功后再保存。');await cloud.saveProfile(config);published=clone(config);pendingLegacyDraft=null;}else await writeDraft(config);saved=config;apply(saved);fill(saved);message(cloud.enabled?'已保存到云端。':'已保存到此浏览器。');modal.close();
     } catch(error){message(error.name==='Error'?error.message:'未能保存，请检查浏览器存储设置；也可以导出发布文件。',true);}
     finally{button.disabled=false;}
   });
   $('#profile-export').addEventListener('click',async()=>{
-    try {const config=await fromForm();const blob=new Blob([JSON.stringify(config,null,2)+'\n'],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='site-profile.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);message('已导出发布文件。更新仓库中的 site-profile.json 后，所有访客才能看到这些修改。');}
+    try {const config=await fromForm();const blob=new Blob([JSON.stringify(config,null,2)+'\n'],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='site-profile.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);message(cloud.enabled?'已导出资料备份，云端修改请点击“保存并查看”。':'已导出发布文件。更新仓库中的 site-profile.json 后，所有访客才能看到这些修改。');}
     catch(error){message(error.message,true);}
   });
   $('#profile-import').addEventListener('click',()=>$('#profile-import-file').click());
@@ -162,6 +167,6 @@
     event.target.value='';
   });
   $('#profile-reset').addEventListener('click',async()=>{
-    try {if(cloud.enabled){const remote=await cloud.getProfile();if(remote)published=normalize(remote);}else await removeDraft();saved=clone(published);apply(saved);fill(saved);message('已恢复当前已发布版本。');}catch{message('浏览器未能清除草稿，请检查存储设置。',true);}
+    try {if(cloud.enabled){const remote=await cloud.getProfile();if(remote)published=normalize(remote);cloudReadError=null;pendingLegacyDraft=null;$('.editor-storage-note').textContent='资料与图片保存到云端，所有访客打开或刷新后可见。';}else await removeDraft();saved=clone(published);apply(saved);fill(saved);message('已恢复当前已发布版本。');}catch(error){message(cloud.enabled?error.message:'浏览器未能清除草稿，请检查存储设置。',true);}
   });
 })();
