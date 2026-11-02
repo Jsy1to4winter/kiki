@@ -3,3 +3,18 @@
 /* Connect the bird collage to the quiet vertical editorial index. */
 .profile-bird-collage::after{content:'';position:absolute;left:55%;top:100%;height:17px;border-left:1px dashed #e6e1d449}
 @media(max-width:650px){.profile-bird-collage::after{height:9px}}
+
+/* A broad bird composition across the hero, followed by portrait and fact index. */
+[data-scene='0']>.profile-bird-collage,[data-scene='0'] .scene-content>.profile-bird-collage{height:auto;margin:20px 0 15px;width:100%}
+.profile-bird-collage img{width:100%;height:clamp(150px,25vw,310px);object-fit:contain;opacity:.84}
+.profile-bird-collage>span{font-size:6px;letter-spacing:1.8px;margin-top:6px}
+.profile-bird-collage::after{display:none}
+.profile-composition{min-height:285px;margin:12px 0 26px;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:30px}
+.profile-index-panel{padding-top:0;align-self:center}
+@media(max-width:650px){
+ [data-scene='0']>.profile-bird-collage,[data-scene='0'] .scene-content>.profile-bird-collage{margin:16px 0 12px}
+ .profile-bird-collage img{height:auto;aspect-ratio:2.09;max-height:none;width:100%}
+ .profile-bird-collage>span{font-size:5px;letter-spacing:1px;margin-top:6px}
+ .profile-composition{min-height:240px;margin:14px 0 25px;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:17px}
+ .profile-index-panel .fact,.profile-index-panel .fact:nth-child(n){min-height:45px}
+}

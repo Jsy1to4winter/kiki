@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "facts": {
+    "name": "",
+    "age": "",
+    "skills": "",
+    "tags": "",
+    "alterEgo": ""
+  },
+  "intro": "这里存放我的文字、偏爱与被记住的瞬间。\n你正在看到的，是尚未完成的一个切面。",
+  "anchor": "雾山影｜UTC+8",
+  "avatar": "assets/profile-glasses-avatar.png",
+  "links": [
+    {
+      "title": "片刻记录",
+      "description": "留下一些不想遗忘的瞬间。",
+      "url": ""
+    },
+    {
+      "title": "偏爱收集",
+      "description": "存放作品、灵感与心头所好。",
+      "url": ""
+    },
+    {
+      "title": "未完之页",
+      "description": "给下一段故事留一个入口。",
+      "url": ""
+    }
+  ]
+}

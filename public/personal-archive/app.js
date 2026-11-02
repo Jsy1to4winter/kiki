@@ -23,7 +23,7 @@ function contentOf(scene) {
  return content;
 }
 function go(to){
- if(detail.open||!$('#cover').hidden)return;
+ if(document.querySelector('dialog[open]')||!$('#cover').hidden)return;
  to=(to+scenes.length)%scenes.length;
  if(switching){pending=to;return;}
  if(to===index)return;
@@ -52,7 +52,7 @@ $$('[data-go]').forEach(b=>b.onclick=()=>go(+b.dataset.go));$$('[data-next]').fo
 let touchX=0,touchY=0;$('#camera').addEventListener('touchstart',e=>{touchX=e.changedTouches[0].clientX;touchY=e.changedTouches[0].clientY},{passive:true});$('#camera').addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-touchX,dy=e.changedTouches[0].clientY-touchY;if(Math.abs(dx)>65&&Math.abs(dx)>Math.abs(dy)*1.5)go(index+(dx<0?1:-1))},{passive:true});
 function show(content){lastFocus=document.activeElement;$('#detail-content').innerHTML=content;detail.showModal();$('#close-detail').focus({preventScroll:true})}
 $$('[data-image]').forEach(b=>b.onclick=()=>show(`<img src="${b.dataset.image}" alt="收藏图片原图">`));function close(){detail.close();lastFocus?.focus({preventScroll:true})}$('#close-detail').onclick=close;$('#close-bottom').onclick=close;detail.onclick=e=>{if(e.target===detail){const r=detail.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)close()}};
-document.addEventListener('keydown',e=>{if(detail.open||!$('#cover').hidden)return;if(e.key==='ArrowRight')go(index+1);if(e.key==='ArrowLeft')go(index-1)});
+document.addEventListener('keydown',e=>{if(document.querySelector('dialog[open]')||!$('#cover').hidden)return;if(e.key==='ArrowRight')go(index+1);if(e.key==='ArrowLeft')go(index-1)});
 
 const cover=$('#cover'),app=$('#app');document.body.classList.add('at-cover');function openArchive(){if(cover.hidden)return;cover.classList.add('departing');app.inert=false;document.body.classList.remove('at-cover');setTimeout(()=>{cover.hidden=true;cover.classList.remove('departing');$('#nav button.selected').focus({preventScroll:true})},reduced?40:650)}
 $('#open-archive').onclick=e=>{e.stopPropagation();openArchive()};cover.onclick=openArchive;
