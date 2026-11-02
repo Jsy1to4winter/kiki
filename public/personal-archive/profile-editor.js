@@ -144,7 +144,7 @@
     catch(error){accessStatus.textContent=error.message;password.value='';password.focus();}
     finally{button.disabled=false;}
   });
-  trigger.addEventListener('click',async()=>{await ready;if(!await verifyAccess())return;fill(pendingLegacyDraft||saved);message(cloudReadError|| (pendingLegacyDraft?'已载入此浏览器之前保存的资料，点击“保存并查看”后同步到云端。':''),!!cloudReadError);modal.showModal();modal.scrollTop=0;field('introTitle').focus({preventScroll:true});});
+  trigger.addEventListener('click',async()=>{await ready;if(!await verifyAccess())return;fill(pendingLegacyDraft||saved);message(cloudReadError|| (pendingLegacyDraft?'已载入此浏览器之前保存的资料，点击“保存并查看”后同步到云端。':''),!!cloudReadError);modal.showModal();window.archiveAlbumEditor?.refresh();modal.scrollTop=0;field('introTitle').focus({preventScroll:true});});
   $('#profile-editor-close').addEventListener('click',()=>modal.close());
   modal.addEventListener('close',()=>trigger.focus({preventScroll:true}));
   modal.addEventListener('click',event=>{if(event.target!==modal)return;const r=modal.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)modal.close();});

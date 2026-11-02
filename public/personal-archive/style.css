@@ -499,3 +499,13 @@ html[data-input='pointer'] #profile-edit:focus{outline:none}
 .profile-access .editor-top{margin-bottom:24px}
 .profile-access .editor-top h2{font-size:25px}
 #profile-access-status{font-size:12px;line-height:1.7;min-height:22px;color:#d7caa5}
+/* All image upload controls belong to the profile editor. */
+.editor-album{padding:15px 0;border-top:1px dashed #ffffff24}
+.editor-album:first-child{border-top:0}
+.editor-album h3{font-size:13px;line-height:1.7;color:#e5dfd1;margin:0 0 7px;overflow-wrap:anywhere}
+.editor-album-status{font-size:11px;line-height:1.8;color:#aaa495;margin:0 0 10px;min-height:20px}
+.editor-album-status[data-error='true']{color:#efc4ae}
+.editor-album-add{padding:10px 17px;border:1px solid #c8bb9255;border-radius:22px;color:#e2d8b8;font-size:12px;min-height:42px;background:#ffffff08}
+.editor-album-add:disabled{opacity:.5;cursor:wait}
+.collection-summary{padding:16px 26px 24px;text-align:right;font:10px/1.5 monospace;color:var(--gold-soft)}
+#editor-album-list input[hidden]{display:none}
