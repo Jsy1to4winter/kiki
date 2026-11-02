@@ -5,3 +5,6 @@ dialog.reviews-modal{width:min(1000px,calc(100% - 40px));max-width:1000px;max-he
 @media(max-width:355px){.reviews-entry{width:235px;height:280px}.reviews-entry-art{bottom:43px}.reviews-photo{top:59px;width:82px;height:108px;left:calc(50% - 41px)}.reviews-entry-label strong{font-size:19px}.reviews-archive-heading p{font-size:12px}.reviews-floating-note{display:none}}
 @media(prefers-reduced-motion:reduce){.reviews-entry *,.reviews-grid-photo{transition:none!important}.reviews-entry:hover .reviews-star-ring{transform:none}}
 @media(max-width:650px){.reviews-dialogue{margin-top:14px}.reviews-bridge{margin-top:14px;margin-bottom:16px}.reviews-entry{height:270px;width:245px}.reviews-entry-art{bottom:42px}.reviews-photo{top:55px;width:85px;height:111px;left:calc(50% - 42.5px)}.reviews-floating-note{top:113px}.reviews-entry-label strong{font-size:20px}}
+
+/* Keep all three cover frames in place, even before all slots have photos. */
+.reviews-photo>img[hidden]{display:none}
